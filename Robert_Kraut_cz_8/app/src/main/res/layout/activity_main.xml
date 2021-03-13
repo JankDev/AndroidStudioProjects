@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="300dp"
+        android:stretchColumns="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:id="@+id/row1"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button7"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/text7"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+
+            <Button
+                android:id="@+id/button8"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/text8"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+
+            <Button
+                android:id="@+id/button9"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/text9"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+
+            <Button
+                android:id="@+id/buttondiv"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/textDiv"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/button4"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/text4"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+
+            <Button
+                android:id="@+id/button5"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/text5"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+
+            <Button
+                android:id="@+id/button6"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/text6"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+
+            <Button
+                android:id="@+id/buttonmul"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/textMul"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/button1"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/text1"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+
+            <Button
+                android:id="@+id/button2"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/text2"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+
+            <Button
+                android:id="@+id/button3"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/text3"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+
+            <Button
+                android:id="@+id/buttonmin"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/textMinus"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/button0"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/text0"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+
+            <Button
+                android:id="@+id/buttondot"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/textDot"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+
+            <Button
+                android:id="@+id/buttoneq"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:background="#3F51B5"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/textEq"
+                android:textColor="@color/white"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+
+            <Button
+                android:id="@+id/buttonplus"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/textPlus"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/textClear"
+                android:textColor="@color/black"
+                app:elevation="0dp"
+                app:iconPadding="0dp"
+                app:strokeColor="@color/black" />
+        </TableRow>
+
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
