@@ -12,6 +12,7 @@ import kotlin.math.exp
  * @author Robert Kraut
  * podpunkty:
  * 1,2a,2bII,3,4,5,6,9
+ * Liczby ujemne obsługiwane tylko po prostu bez nawiasów
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var textEditor: TextEditor

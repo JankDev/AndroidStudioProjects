@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Robert_Kraut_cz_8</string>
+    <string name="exit">Wyjdź</string>
+    <string name="gold">Złoto</string>
+    <string name="price">Kursy walut</string>
+    <string name="convert">Konwerter</string>
+</resources>
