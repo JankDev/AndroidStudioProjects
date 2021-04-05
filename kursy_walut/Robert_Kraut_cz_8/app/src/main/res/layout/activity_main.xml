@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/background"
+    android:onClick="onViewCurrencyButtonClick"
     tools:context=".MainActivity">
 
     <Button
@@ -21,6 +22,8 @@
         app:cornerRadius="@dimen/corner_radius"
         app:iconTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/exit"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -37,7 +40,9 @@
         app:cornerRadius="@dimen/corner_radius"
         app:iconTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/convert"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/price"
@@ -47,13 +52,18 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="192dp"
         android:drawableTop="@mipmap/price"
+        android:onClick="onViewCurrencyButtonClick"
         android:text="@string/price"
         android:textColor="@color/black"
         app:backgroundTint="@color/white"
         app:cornerRadius="@dimen/corner_radius"
         app:iconTint="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/gold"
+        app:layout_constraintEnd_toStartOf="@+id/convert"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/convert"

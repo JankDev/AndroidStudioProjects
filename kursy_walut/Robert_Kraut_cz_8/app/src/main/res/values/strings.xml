@@ -4,4 +4,6 @@
     <string name="gold">Złoto</string>
     <string name="price">Kursy walut</string>
     <string name="convert">Konwerter</string>
+    <string name="title_currencyview_list">CurrencyViews</string>
+    <string name="title_currencyview_detail">CurrencyView Detail</string>
 </resources>

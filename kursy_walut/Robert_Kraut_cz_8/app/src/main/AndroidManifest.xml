@@ -11,6 +11,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Robert_Kraut_cz_8">
+        <activity
+            android:name=".view.CurrencyViewListActivity"
+            android:label="@string/title_currencyview_list"
+            android:theme="@style/Theme.Robert_Kraut_cz_8.NoActionBar"></activity>
+        <activity
+            android:name=".view.CurrencyViewDetailActivity"
+            android:label="@string/title_currencyview_detail"
+            android:parentActivityName=".view.CurrencyViewListActivity"
+            android:theme="@style/Theme.Robert_Kraut_cz_8.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.agh.robert_kraut_cz_8.view.CurrencyViewListActivity" />
+        </activity>
+
         <service
             android:name=".NBPService"
             android:enabled="true"
