@@ -6,8 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import pl.agh.robert_kraut_cz_8.R
-import pl.agh.robert_kraut_cz_8.model.CurrencyRate
+import pl.agh.robert_kraut_cz_8.domain.CurrencyService
+import pl.agh.robert_kraut_cz_8.model.CurrencyDetail
 
 /**
  * A fragment representing a single CurrencyView detail screen.
@@ -16,23 +21,24 @@ import pl.agh.robert_kraut_cz_8.model.CurrencyRate
  * on handsets.
  */
 class CurrencyViewDetailFragment : Fragment() {
+    private val currencyService = CurrencyService()
+    private var item: CurrencyDetail? = null
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private var item: CurrencyRate? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) = runBlocking<Unit> {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            if (it.containsKey(ARG_ITEM_ID)) {
-                // Load the dummy content specified by the fragment
-                // arguments. In a real-world scenario, use a Loader
-                // to load content from a content provider.
-          /*      item = DummyContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
+            if (it.containsKey(ARG_ITEM_CODE) && it.containsKey(ARG_ITEM_TABLE)) {
+                val currencyCode = it.getString(ARG_ITEM_CODE)!!
+                val currencyTable = it.getString(ARG_ITEM_TABLE)!!
+                item = withContext(Dispatchers.Default) {
+                    currencyService.getCurrencyDetails(
+                        currencyCode,
+                        currencyTable
+                    )
+                }
                 activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title =
-                    item?.content*/
+                    item?.code
             }
         }
     }
@@ -43,19 +49,15 @@ class CurrencyViewDetailFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.currencyview_detail, container, false)
 
-        // Show the dummy content as text in a TextView.
         item?.let {
-            rootView.findViewById<TextView>(R.id.currencyview_detail).text = it.mid.toString()
+            rootView.findViewById<TextView>(R.id.currencyview_detail).text = it.code
         }
 
         return rootView
     }
 
     companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
-        const val ARG_ITEM_ID = "item_id"
+        const val ARG_ITEM_CODE = "item_code"
+        const val ARG_ITEM_TABLE = "item_table"
     }
 }

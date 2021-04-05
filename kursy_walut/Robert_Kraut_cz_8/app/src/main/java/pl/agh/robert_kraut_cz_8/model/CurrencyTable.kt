@@ -4,5 +4,5 @@ data class CurrencyTable(
     val table: String,
     val no: String,
     val effectiveDate: String,
-    val rates: List<CurrencyRate>
+    val rates: List<CurrencyOverview>
 )

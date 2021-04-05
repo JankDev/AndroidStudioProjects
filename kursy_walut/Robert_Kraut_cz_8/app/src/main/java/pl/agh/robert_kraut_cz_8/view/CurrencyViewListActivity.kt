@@ -14,7 +14,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import pl.agh.robert_kraut_cz_8.R
 import pl.agh.robert_kraut_cz_8.domain.CurrencyService
-import pl.agh.robert_kraut_cz_8.model.CurrencyRate
+import pl.agh.robert_kraut_cz_8.model.CurrencyOverview
 
 class CurrencyViewListActivity : AppCompatActivity() {
     private val currencyService = CurrencyService()
@@ -36,23 +36,24 @@ class CurrencyViewListActivity : AppCompatActivity() {
         setupRecyclerView(findViewById(R.id.currencyview_list), rates.await())
     }
 
-    private fun setupRecyclerView(recyclerView: RecyclerView, data: List<CurrencyRate>) {
+    private fun setupRecyclerView(recyclerView: RecyclerView, data: List<CurrencyOverview>) {
         recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, data, twoPane)
     }
 
     class SimpleItemRecyclerViewAdapter(
         private val parentActivity: CurrencyViewListActivity,
-        private val values: List<CurrencyRate>,
+        private val values: List<CurrencyOverview>,
         private val twoPane: Boolean
     ) :
         RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
 
         private val onClickListener: View.OnClickListener = View.OnClickListener { v ->
-            val item = v.tag as CurrencyRate
+            val item = v.tag as CurrencyOverview
             if (twoPane) {
                 val fragment = CurrencyViewDetailFragment().apply {
                     arguments = Bundle().apply {
-                        putString(CurrencyViewDetailFragment.ARG_ITEM_ID, item.code)
+                        putString(CurrencyViewDetailFragment.ARG_ITEM_CODE, item.code)
+                        putString(CurrencyViewDetailFragment.ARG_ITEM_TABLE, item.table)
                     }
                 }
                 parentActivity.supportFragmentManager
@@ -61,7 +62,8 @@ class CurrencyViewListActivity : AppCompatActivity() {
                     .commit()
             } else {
                 val intent = Intent(v.context, CurrencyViewDetailActivity::class.java).apply {
-                    putExtra(CurrencyViewDetailFragment.ARG_ITEM_ID, item.code)
+                    putExtra(CurrencyViewDetailFragment.ARG_ITEM_CODE, item.code)
+                    putExtra(CurrencyViewDetailFragment.ARG_ITEM_TABLE, item.table)
                 }
                 v.context.startActivity(intent)
             }
