@@ -56,7 +56,7 @@ class CurrencyViewDetailFragment : Fragment() {
             rootView.findViewById<TextView>(R.id.todaysRate).text = it.todaysRate.mid.toString()
             rootView.findViewById<TextView>(R.id.yesterdaysRate).text = it.yesterdaysRate.mid.toString()
 
-            val last30Chart = rootView.findViewById<AnyChartView>(R.id.last30Chart)
+            val last30Chart = rootView.findViewById<AnyChartView>(R.id.goldPriceChart)
             val last30LineChart = AnyChart.line()
             println(item)
             last30LineChart.data(it.rates.map { rate ->

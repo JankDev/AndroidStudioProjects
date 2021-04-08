@@ -4,8 +4,9 @@
     <string name="gold">Złoto</string>
     <string name="price">Kursy walut</string>
     <string name="convert">Konwerter</string>
-    <string name="title_currencyview_list">Currencies</string>
-    <string name="title_currencyview_detail">Currency Detail</string>
-    <string name="today_currency_rate_detail">Today</string>
-    <string name="yesterday_currency_rate_detail">Yesterday</string>W
+    <string name="title_currencyview_list">Waluty</string>
+    <string name="title_currencyview_detail">Waluta</string>
+    <string name="today_currency_rate_detail">Dzisiaj</string>
+    <string name="yesterday_currency_rate_detail">Wcziraj</string>
+    <string name="current_price">Aktualny kurs</string>
 </resources>

@@ -70,7 +70,7 @@
     </com.anychart.AnyChartView>
 
     <com.anychart.AnyChartView
-        android:id="@+id/last30Chart"
+        android:id="@+id/goldPriceChart"
         android:layout_width="346dp"
         android:layout_height="255dp"
         android:layout_marginStart="16dp"

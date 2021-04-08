@@ -2,6 +2,7 @@ package pl.agh.robert_kraut_cz_8.domain
 
 import pl.agh.robert_kraut_cz_8.model.CurrencyDetail
 import pl.agh.robert_kraut_cz_8.model.CurrencyTable
+import pl.agh.robert_kraut_cz_8.model.GoldPrice
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
@@ -24,4 +25,10 @@ interface NBPApi {
         @Path("code") code: String,
         @Path("topCount") topCount: NumberOfDays
     ): Response<CurrencyDetail>
+
+    @GET("cenyzlota/last/{topCount}")
+    @Headers("Accept: application/json")
+    suspend fun getGoldPrice(
+        @Path("topCount") topCount: NumberOfDays
+    ): Response<List<GoldPrice>>
 }
