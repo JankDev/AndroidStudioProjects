@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.anychart.AnyChart
+import com.anychart.AnyChartView
+import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -50,7 +53,31 @@ class CurrencyViewDetailFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.currencyview_detail, container, false)
 
         item?.let {
-            rootView.findViewById<TextView>(R.id.currencyview_detail).text = it.code
+            rootView.findViewById<TextView>(R.id.todaysRate).text = it.todaysRate.mid.toString()
+            rootView.findViewById<TextView>(R.id.yesterdaysRate).text = it.yesterdaysRate.mid.toString()
+
+            val last30Chart = rootView.findViewById<AnyChartView>(R.id.last30Chart)
+            val last30LineChart = AnyChart.line()
+            println(item)
+            last30LineChart.data(it.rates.map { rate ->
+                ValueDataEntry(
+                    rate.effectiveDate,
+                    rate.mid
+                )
+            })
+
+            last30Chart.setChart(last30LineChart)
+
+            val last7Chart = rootView.findViewById<AnyChartView>(R.id.last7Chart)
+            val last7LineChart = AnyChart.line()
+            last7LineChart.data(it.rates.takeLast(7).map { rate ->
+                ValueDataEntry(
+                    rate.effectiveDate,
+                    rate.mid
+                )
+            })
+
+            last7Chart.setChart(last7LineChart)
         }
 
         return rootView

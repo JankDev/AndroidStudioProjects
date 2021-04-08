@@ -14,7 +14,7 @@
         <activity
             android:name=".view.CurrencyViewListActivity"
             android:label="@string/title_currencyview_list"
-            android:theme="@style/Theme.Robert_Kraut_cz_8.NoActionBar"></activity>
+            android:theme="@style/Theme.Robert_Kraut_cz_8.NoActionBar" />
         <activity
             android:name=".view.CurrencyViewDetailActivity"
             android:label="@string/title_currencyview_detail"
@@ -24,11 +24,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.agh.robert_kraut_cz_8.view.CurrencyViewListActivity" />
         </activity>
-
-        <service
-            android:name=".NBPService"
-            android:enabled="true"
-            android:exported="true" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
