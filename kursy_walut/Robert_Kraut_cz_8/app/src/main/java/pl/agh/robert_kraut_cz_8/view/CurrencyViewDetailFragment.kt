@@ -1,11 +1,15 @@
 package pl.agh.robert_kraut_cz_8.view
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.anychart.APIlib
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
 import com.anychart.chart.common.dataentry.ValueDataEntry
@@ -40,7 +44,7 @@ class CurrencyViewDetailFragment : Fragment() {
                         currencyTable
                     )
                 }
-                activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title =
+                activity?.findViewById<Toolbar>(R.id.currency_detail_toolbar)?.title =
                     item?.code
             }
         }
@@ -56,28 +60,32 @@ class CurrencyViewDetailFragment : Fragment() {
             rootView.findViewById<TextView>(R.id.todaysRate).text = it.todaysRate.mid.toString()
             rootView.findViewById<TextView>(R.id.yesterdaysRate).text = it.yesterdaysRate.mid.toString()
 
-            val last30Chart = rootView.findViewById<AnyChartView>(R.id.goldPriceChart)
+            val last7Rates = it.rates.takeLast(7)
+            val last7Chart = rootView.findViewById<AnyChartView>(R.id.last7Chart)
+            APIlib.getInstance().setActiveAnyChartView(last7Chart)
+
+            val last7LineChart = AnyChart.line()
+            last7LineChart.data(last7Rates.map { rate ->
+                ValueDataEntry(
+                    rate.effectiveDate,
+                    rate.mid
+                )
+            })
+            last7LineChart.title(getString(R.string.last7_chart_title))
+            last7Chart.setChart(last7LineChart)
+
+            val last30Chart = rootView.findViewById<AnyChartView>(R.id.last30Chart)
+            APIlib.getInstance().setActiveAnyChartView(last30Chart)
             val last30LineChart = AnyChart.line()
-            println(item)
+
             last30LineChart.data(it.rates.map { rate ->
                 ValueDataEntry(
                     rate.effectiveDate,
                     rate.mid
                 )
             })
-
+            last30LineChart.title(getString(R.string.last30_chart_title))
             last30Chart.setChart(last30LineChart)
-
-            val last7Chart = rootView.findViewById<AnyChartView>(R.id.last7Chart)
-            val last7LineChart = AnyChart.line()
-            last7LineChart.data(it.rates.takeLast(7).map { rate ->
-                ValueDataEntry(
-                    rate.effectiveDate,
-                    rate.mid
-                )
-            })
-
-            last7Chart.setChart(last7LineChart)
         }
 
         return rootView

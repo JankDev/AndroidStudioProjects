@@ -7,6 +7,8 @@
     <string name="title_currencyview_list">Waluty</string>
     <string name="title_currencyview_detail">Waluta</string>
     <string name="today_currency_rate_detail">Dzisiaj</string>
-    <string name="yesterday_currency_rate_detail">Wcziraj</string>
+    <string name="yesterday_currency_rate_detail">Wczoraj</string>
     <string name="current_price">Aktualny kurs</string>
+    <string name="last7_chart_title">Kurs za ostatnie 7 dni</string>
+    <string name="last30_chart_title">Kurs za ostatnie 30 dni</string>
 </resources>

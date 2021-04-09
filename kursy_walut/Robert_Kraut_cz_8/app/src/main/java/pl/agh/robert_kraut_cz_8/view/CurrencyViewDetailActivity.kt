@@ -19,9 +19,6 @@ class CurrencyViewDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_currencyview_detail)
-        setSupportActionBar(findViewById(R.id.detail_toolbar))
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (savedInstanceState == null) {
             val fragment = CurrencyViewDetailFragment().apply {
