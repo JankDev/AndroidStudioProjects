@@ -22,4 +22,8 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, GoldViewActivity::class.java)
         startActivity(intent)
     }
+
+    fun onExitButtonClick(view: View) {
+        finishAffinity()
+    }
 }
