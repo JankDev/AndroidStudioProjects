@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import pl.agh.robert_kraut_cz_8.R
+import pl.agh.robert_kraut_cz_8.domain.CountryFlagRetriever
 import pl.agh.robert_kraut_cz_8.domain.CurrencyService
 import pl.agh.robert_kraut_cz_8.model.CurrencyOverview
 
@@ -79,6 +81,7 @@ class CurrencyViewListActivity : AppCompatActivity() {
             val item = values[position]
             holder.idView.text = item.code
             holder.contentView.text = item.mid.toString()
+            holder.countryFlagView.setImageResource(CountryFlagRetriever.getFlagForCode(item.code))
 
             with(holder.itemView) {
                 tag = item
@@ -89,6 +92,7 @@ class CurrencyViewListActivity : AppCompatActivity() {
         override fun getItemCount() = values.size
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val countryFlagView: ImageView = view.findViewById(R.id.countryFlag)
             val idView: TextView = view.findViewById(R.id.id_text)
             val contentView: TextView = view.findViewById(R.id.content)
         }
