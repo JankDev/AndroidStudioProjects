@@ -9,11 +9,12 @@ class CurrencyService {
     private val nbpApi = retrofit.create(NBPApi::class.java)
 
     suspend fun getCurrencyListings(): List<CurrencyOverview> {
-        val tableA = nbpApi.getCurrencyTable("A")
-        val tableB = nbpApi.getCurrencyTable("B")
+        val tableA = nbpApi.getCurrencyTable("A", 2)
+        val tableB = nbpApi.getCurrencyTable("B", 2)
         return if (tableA.isSuccessful && tableB.isSuccessful) {
-            (tableA.body()!! + tableB.body()!!)
-                .flatMap { table -> table.rates.map { it.withTable(table.table) } }
+            val tableARates = getRatesForTable(tableA.body()!!)
+            val tableBRates = getRatesForTable(tableB.body()!!)
+            tableARates + tableBRates
         } else {
             throw RuntimeException(tableA.message())
         }
@@ -27,4 +28,11 @@ class CurrencyService {
         }
     }
 
+    private fun getRatesForTable(table: List<CurrencyTable>): List<CurrencyOverview> {
+        return table[1].rates
+            .map { currencyOverview ->
+                currencyOverview.copy(up = currencyOverview.mid > table[0].rates.first { it.code == currencyOverview.code }.mid)
+            }
+            .map { it.withTable(table[0].table) }
+    }
 }

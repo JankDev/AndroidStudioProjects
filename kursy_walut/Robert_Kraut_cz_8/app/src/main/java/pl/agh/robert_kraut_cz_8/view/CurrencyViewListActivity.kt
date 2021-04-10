@@ -82,6 +82,7 @@ class CurrencyViewListActivity : AppCompatActivity() {
             holder.idView.text = item.code
             holder.contentView.text = item.mid.toString()
             holder.countryFlagView.setImageResource(CountryFlagRetriever.getFlagForCode(item.code))
+            holder.priceDirection.setImageResource(if (item.up == true) R.drawable.arrow_green else R.drawable.arrow_red)
 
             with(holder.itemView) {
                 tag = item
@@ -95,6 +96,7 @@ class CurrencyViewListActivity : AppCompatActivity() {
             val countryFlagView: ImageView = view.findViewById(R.id.countryFlag)
             val idView: TextView = view.findViewById(R.id.id_text)
             val contentView: TextView = view.findViewById(R.id.content)
+            val priceDirection: ImageView = view.findViewById(R.id.priceDirection)
         }
     }
 }

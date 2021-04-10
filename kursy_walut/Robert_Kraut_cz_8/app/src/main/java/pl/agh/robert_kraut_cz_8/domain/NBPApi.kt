@@ -14,9 +14,12 @@ typealias NumberOfDays = Int
 
 interface NBPApi {
 
-    @GET("exchangerates/tables/{table}")
+    @GET("exchangerates/tables/{table}/last/{topCount}")
     @Headers("Accept: application/json")
-    suspend fun getCurrencyTable(@Path("table") table: String): Response<List<CurrencyTable>>
+    suspend fun getCurrencyTable(
+        @Path("table") table: String,
+        @Path("topCount") topCount: NumberOfDays = 1
+    ): Response<List<CurrencyTable>>
 
     @GET("exchangerates/rates/{table}/{code}/last/{topCount}")
     @Headers("Accept: application/json")
