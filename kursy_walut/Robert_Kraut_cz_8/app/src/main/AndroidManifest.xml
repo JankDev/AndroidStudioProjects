@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Robert_Kraut_cz_8">
-        <activity android:name=".view.GoldViewActivity"></activity>
+        <activity android:name=".view.ConverterView"></activity>
+        <activity android:name=".view.GoldViewActivity" />
         <activity
             android:name=".view.CurrencyViewListActivity"
             android:label="@string/title_currencyview_list"

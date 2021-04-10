@@ -11,4 +11,6 @@
     <string name="current_price">Aktualny kurs</string>
     <string name="last7_chart_title">Kurs za ostatnie 7 dni</string>
     <string name="last30_chart_title">Kurs za ostatnie 30 dni</string>
+    <string name="convert_toolbar_title">Konwerter walut</string>
+    <string name="pln">PLN</string>
 </resources>
