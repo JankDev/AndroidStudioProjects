@@ -5,23 +5,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.selects.SelectClause1
 import pl.agh.robert_kraut_cz_8.R
 import pl.agh.robert_kraut_cz_8.domain.CountryFlagRetriever
 import pl.agh.robert_kraut_cz_8.domain.CurrencyService
 import pl.agh.robert_kraut_cz_8.model.CurrencyOverview
+import java.lang.RuntimeException
 
 class CurrencyViewListActivity : AppCompatActivity() {
     private val currencyService = CurrencyService()
     private var twoPane: Boolean = false
 
+    /**
+     * Experiment with kotlin's coroutines
+     */
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) = runBlocking {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_currencyview_list)
@@ -34,8 +41,29 @@ class CurrencyViewListActivity : AppCompatActivity() {
             twoPane = true
         }
 
-        val rates = async { currencyService.getCurrencyListings() }
-        setupRecyclerView(findViewById(R.id.currencyview_list), rates.await())
+        supervisorScope {
+            val job = async(start = CoroutineStart.LAZY) { currencyService.getCurrencyListings() }
+            val progressBar = ProgressBar(this@CurrencyViewListActivity)
+            progressBar.visibility = View.VISIBLE
+            val frameLayout = findViewById<FrameLayout>(R.id.frameLayout)
+            val ratesList = findViewById<RecyclerView>(R.id.currencyview_list)
+            replaceView(ratesList, progressBar, frameLayout)
+
+            try {
+                job.await()
+                replaceView(progressBar, ratesList, frameLayout)
+                setupRecyclerView(ratesList, job.getCompleted())
+            } catch (ex: RuntimeException) {
+                val errorText = TextView(this@CurrencyViewListActivity)
+                errorText.text = job.getCompletionExceptionOrNull()?.message
+                replaceView(progressBar, errorText, frameLayout)
+            }
+        }
+    }
+
+    private fun replaceView(oldView: View, newView: View, container: ViewGroup) {
+        container.removeView(oldView)
+        container.addView(newView)
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView, data: List<CurrencyOverview>) {
