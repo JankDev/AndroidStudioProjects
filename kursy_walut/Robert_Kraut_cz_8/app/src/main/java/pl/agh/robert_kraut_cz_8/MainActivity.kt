@@ -9,6 +9,10 @@ import pl.agh.robert_kraut_cz_8.view.ConverterView
 import pl.agh.robert_kraut_cz_8.view.CurrencyViewListActivity
 import pl.agh.robert_kraut_cz_8.view.GoldViewActivity
 
+/**
+ * Robert Kraut
+ * Wszystkie podpunkty
+ */
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
