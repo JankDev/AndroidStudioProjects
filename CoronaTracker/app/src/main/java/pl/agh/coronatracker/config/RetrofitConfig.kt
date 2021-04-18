@@ -1,5 +1,8 @@
 package pl.agh.coronatracker.config
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import pl.agh.coronatracker.domain.CoronaApi
@@ -17,10 +20,12 @@ val client: OkHttpClient = OkHttpClient.Builder().apply {
     addInterceptor(loggingInterceptor)
 }.build()
 
-
+const val CONTENT_TYPE = "application/json"
 val retrofit: Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
-    .addConverterFactory(GsonConverterFactory.create())
+    .addConverterFactory(Json {
+        ignoreUnknownKeys = true
+    }.asConverterFactory(CONTENT_TYPE.toMediaType()))
     .addConverterFactory(MoshiConverterFactory.create())
     .client(client)
     .build()

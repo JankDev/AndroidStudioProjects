@@ -9,6 +9,8 @@ import pl.agh.coronatracker.util.InstantSerializer
 @ExperimentalSerializationApi
 @Serializable
 data class CoronaSummary(
+    @SerialName("ID") val id: String,
+    @SerialName("Message") val message: String,
     @SerialName("Global") val global: GlobalSummary,
     @SerialName("Countries") val countries: List<CountrySummary>,
     @SerialName("Date") @Serializable(with = InstantSerializer::class) val date: Instant
@@ -39,5 +41,5 @@ data class CountrySummary(
     @SerialName("TotalDeaths") val totalDeaths: Int,
     @SerialName("NewRecovered") val newRecovered: Int,
     @SerialName("TotalRecovered") val totalRecovered: Int,
-    @SerialName("Date") @Serializable(with = InstantSerializer::class) val date: Instant
+    @SerialName("Date") @Serializable(with = InstantSerializer::class) val date: Instant,
 )
