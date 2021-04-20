@@ -80,7 +80,7 @@ data class CountryWithTotalSummaries private constructor(
             country: CountryDetails,
             summaries: List<CountryTotalSummary>
         ): CountryWithTotalSummaries? {
-            val firstNonEmptyIndex = summaries.indexOfFirst { it.isEmpty() }
+            val firstNonEmptyIndex = summaries.indexOfFirst { it.isEmpty() } // most of the data is empty. get skip data until first day that data is not empty
             return if (firstNonEmptyIndex == -1) null
             else CountryWithTotalSummaries(
                 country,

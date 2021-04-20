@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         supervisorScope {
             try {
-                val countries = withContext(Dispatchers.IO) {
+                val countries = withContext(Dispatchers.IO) { // get list of countries from here https://api.covid19api.com/countries
                     coronaApi.getCountries()
                         .also { print(it) }
                         .takeIf { it.isSuccessful }
@@ -50,9 +50,9 @@ class MainActivity : AppCompatActivity() {
                         ?: throw RuntimeException("Error loading data")
                 }.take(30)
 
-                countries.mapNotNull { country ->
+                countries.mapNotNull { country -> // for each country go for the details https://api.covid19api.com/total/country/{country}
                     val result = withContext(Dispatchers.IO) {
-                        Thread.sleep(100)
+                        Thread.sleep(100) // hack! pseudo throttling
                         try {
                             coronaApi.countrySummary(country.country)
                                 .also { print(it) }
@@ -62,14 +62,14 @@ class MainActivity : AppCompatActivity() {
                             null
                         }
                     }
-                    if (result != null) CountryWithTotalSummaries.acceptCountryData(
+                    if (result != null) CountryWithTotalSummaries.acceptCountryData( // prepare domain object
                         country,
                         result
                     ) else null
                 }.map { country ->
-                    CountryDataStore.acceptNewCountry(country)
-                    adapter.dataSet = CountryDataStore.currencyRates
-                    adapter.notifyDataSetChanged()
+                    CountryDataStore.acceptNewCountry(country) // save fetched country data to global country list
+                    adapter.dataSet = CountryDataStore.currencyRates // save new list to recyclewView dataset
+                    adapter.notifyDataSetChanged() // notify recyclerView about new countries
                 }
 
             } catch (ex: Exception) {
