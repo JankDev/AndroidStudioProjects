@@ -9,26 +9,30 @@ import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.blongho.country_data.World
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
-import pl.agh.coronatracker.config.coronaApi
+import pl.agh.coronatracker.domain.CoronaService
 
 import pl.agh.coronatracker.dummy.DummyContent
-import pl.agh.coronatracker.model.CoronaSummary
-import pl.agh.coronatracker.model.CountrySummary
+import pl.agh.coronatracker.view_model.CoronaRegionSummaryViewModel
+import pl.agh.coronatracker.view_model.CoronaSummaryViewModel
 
 class ItemListActivity : AppCompatActivity() {
     private var twoPane: Boolean = false
-    private lateinit var coronaSummary: CoronaSummary
+    private val coronaService = CoronaService()
+    private lateinit var coronaSummary: CoronaSummaryViewModel
 
     @ExperimentalSerializationApi
     override fun onCreate(savedInstanceState: Bundle?) = runBlocking {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_list)
+        World.init(applicationContext)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -41,13 +45,9 @@ class ItemListActivity : AppCompatActivity() {
         supervisorScope {
             try {
                 coronaSummary = withContext(Dispatchers.IO) {
-                    coronaApi.getSummary()
-                        .also { print(it) }
-                        .takeIf { it.isSuccessful }
-                        ?.body()
-                        ?: throw RuntimeException("Error loading data")
+                    coronaService.getCoronaSummary()
                 }
-                setupRecyclerView(findViewById(R.id.item_list), coronaSummary.countries)
+                setupRecyclerView(findViewById(R.id.item_list), coronaSummary.regions)
             } catch (ex: Exception) {
                 ex.printStackTrace()
             }
@@ -55,13 +55,13 @@ class ItemListActivity : AppCompatActivity() {
 
     }
 
-    private fun setupRecyclerView(recyclerView: RecyclerView, items: List<CountrySummary>) {
+    private fun setupRecyclerView(recyclerView: RecyclerView, items: List<CoronaRegionSummaryViewModel>) {
         recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, items, twoPane)
     }
 
     class SimpleItemRecyclerViewAdapter(
         private val parentActivity: ItemListActivity,
-        private val values: List<CountrySummary>,
+        private val values: List<CoronaRegionSummaryViewModel>,
         private val twoPane: Boolean
     ) :
         RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
@@ -98,11 +98,9 @@ class ItemListActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = values[position]
-            holder.countryView.text = item.country
+            holder.iconView.setImageResource(item.icon)
+            holder.regionView.text = item.name
             holder.newConfirmedView.text = item.newConfirmed.toString()
-            holder.newDeathsView.text = item.newDeaths.toString()
-            holder.totalConfirmedView.text = item.totalConfirmed.toString()
-            holder.totalDeathsView.text = item.totalDeaths.toString()
 
             with(holder.itemView) {
                 tag = item
@@ -113,12 +111,9 @@ class ItemListActivity : AppCompatActivity() {
         override fun getItemCount() = values.size
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val countryView: TextView = view.findViewById(R.id.country)
+            val iconView: ImageView = view.findViewById(R.id.region_icon)
+            val regionView: TextView = view.findViewById(R.id.region)
             val newConfirmedView: TextView = view.findViewById(R.id.new_confirmed)
-            val newDeathsView: TextView = view.findViewById(R.id.new_deaths)
-            val totalConfirmedView: TextView = view.findViewById(R.id.total_confirmed)
-            val totalDeathsView: TextView = view.findViewById(R.id.total_deaths)
-
         }
     }
 }
