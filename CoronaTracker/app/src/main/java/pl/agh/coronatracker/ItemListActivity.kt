@@ -25,7 +25,6 @@ import pl.agh.coronatracker.view_model.CoronaSummaryViewModel
 
 class ItemListActivity : AppCompatActivity() {
     private var twoPane: Boolean = false
-    private val coronaService = CoronaService()
     private lateinit var coronaSummary: CoronaSummaryViewModel
 
     @ExperimentalSerializationApi
@@ -45,7 +44,7 @@ class ItemListActivity : AppCompatActivity() {
         supervisorScope {
             try {
                 coronaSummary = withContext(Dispatchers.IO) {
-                    coronaService.getCoronaSummary()
+                    CoronaService.getCoronaSummary()
                 }
                 setupRecyclerView(findViewById(R.id.item_list), coronaSummary.regions)
             } catch (ex: Exception) {
@@ -55,39 +54,25 @@ class ItemListActivity : AppCompatActivity() {
 
     }
 
-    private fun setupRecyclerView(recyclerView: RecyclerView, items: List<CoronaRegionSummaryViewModel>) {
-        recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, items, twoPane)
+    private fun setupRecyclerView(
+        recyclerView: RecyclerView,
+        items: List<CoronaRegionSummaryViewModel>
+    ) {
+        recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, items)
     }
 
     class SimpleItemRecyclerViewAdapter(
         private val parentActivity: ItemListActivity,
         private val values: List<CoronaRegionSummaryViewModel>,
-        private val twoPane: Boolean
     ) :
         RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
 
-        private val onClickListener: View.OnClickListener
-
-        init {
-            onClickListener = View.OnClickListener { v ->
-                val item = v.tag as DummyContent.DummyItem
-                if (twoPane) {
-                    val fragment = ItemDetailFragment().apply {
-                        arguments = Bundle().apply {
-                            putString(ItemDetailFragment.ARG_ITEM_ID, item.id)
-                        }
-                    }
-                    parentActivity.supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.item_detail_container, fragment)
-                        .commit()
-                } else {
-                    val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
-                        putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
-                    }
-                    v.context.startActivity(intent)
-                }
+        private val onClickListener: View.OnClickListener = View.OnClickListener { v ->
+            val item = v.tag as CoronaRegionSummaryViewModel
+            val intent = Intent(parentActivity, ItemDetailActivity::class.java).apply {
+                putExtra("countryName", item.name)
             }
+            parentActivity.startActivity(intent)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

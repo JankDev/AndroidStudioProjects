@@ -1,46 +1,58 @@
 package pl.agh.coronatracker
 
-import android.content.Intent
-import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import android.view.MenuItem
+import android.os.Bundle
+import android.widget.TextView
+//import com.anychart.APIlib
+//import com.anychart.AnyChartView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.withContext
+import pl.agh.coronatracker.domain.CoronaService
+import pl.agh.coronatracker.model.CountryWithTotalSummaries
 
 class ItemDetailActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    internal lateinit var countryName: String
+    internal lateinit var country: CountryWithTotalSummaries
+
+    internal lateinit var confirmed: TextView
+    internal lateinit var deaths: TextView
+    internal lateinit var recovered: TextView
+
+//    internal lateinit var chart: AnyChartView
+
+
+    override fun onCreate(savedInstanceState: Bundle?) = runBlocking {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_detail)
-        setSupportActionBar(findViewById(R.id.detail_toolbar))
-
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        if (savedInstanceState == null) {
-            val fragment = ItemDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ItemDetailFragment.ARG_ITEM_ID,
-                            intent.getStringExtra(ItemDetailFragment.ARG_ITEM_ID))
+        countryName = intent.getStringExtra("countryName")!!
+        confirmed = findViewById(R.id.confirmedCases)
+        deaths = findViewById(R.id.deathCases)
+        recovered = findViewById(R.id.recoveredCases)
+        supervisorScope {
+            try {
+                country = withContext(Dispatchers.IO) {
+                    CoronaService.getCountrySummary(countryName)
                 }
+                showData()
+            } catch (ex: Exception) {
+                ex.printStackTrace()
             }
-
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.item_detail_container, fragment)
-                    .commit()
         }
+        showData()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) =
-            when (item.itemId) {
-                android.R.id.home -> {
-                    navigateUpTo(Intent(this, ItemListActivity::class.java))
-                    true
-                }
-                else -> super.onOptionsItemSelected(item)
-            }
+
+    private fun showData() {
+        val today = country.today
+        confirmed.text = getString(R.string.today_confirmed_text, today.confirmed)
+        deaths.text = getString(R.string.today_deaths_text, today.deaths)
+        recovered.text = getString(R.string.today_recovered_text, today.recovered)
+//        APIlib.getInstance().setActiveAnyChartView(last7DaysChart);
+//        chart.setChart(CurrencyChart.createChart(currencyRates, 7))
+//        APIlib.getInstance().setActiveAnyChartView(last30DaysChart);
+//        last30DaysChart.setChart(CurrencyChart.createChart(currencyRates, 30))
+    }
 }

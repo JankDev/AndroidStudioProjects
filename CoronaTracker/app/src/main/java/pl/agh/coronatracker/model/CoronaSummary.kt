@@ -9,8 +9,10 @@ import kotlinx.serialization.Serializable
 import pl.agh.coronatracker.R
 import pl.agh.coronatracker.domain.CountryFlagRetriever
 import pl.agh.coronatracker.util.InstantSerializer
+import pl.agh.coronatracker.util.LocalDateSerializer
 import pl.agh.coronatracker.view_model.CoronaRegionSummaryViewModel
 import pl.agh.coronatracker.view_model.CoronaSummaryViewModel
+import java.time.LocalDate
 
 interface Regionalizable {
     fun toRegion(): CoronaRegionSummaryViewModel
@@ -65,4 +67,49 @@ data class CountrySummary(
         country,
         newConfirmed
     )
+}
+
+@ExperimentalSerializationApi
+@Serializable
+data class CountryTotalSummary(
+    @SerialName("Country") val country: String,
+    @SerialName("Deaths") val deaths: Int,
+    @SerialName("Recovered") val recovered: Int,
+    @SerialName("Confirmed") val confirmed: Int,
+    @SerialName("Date") @Serializable(with = LocalDateSerializer::class) val date: LocalDate
+) {
+    fun isEmpty(): Boolean = deaths == 0 && recovered == 0 && confirmed == 0
+}
+
+data class CountryWithTotalSummaries private constructor(
+    val country: String,
+    val summaries: List<CountryTotalSummary>,
+    val today: CountryTotalSummary
+) {
+
+    companion object {
+        fun acceptCountryData(
+            country: String,
+            summaries: List<CountryTotalSummary>
+        ): CountryWithTotalSummaries? {
+            val firstNonEmptyIndex =
+                summaries.indexOfFirst { it.isEmpty() } // most of the data is empty. get skip data until first day that data is not empty
+            val correctedData = summaries.drop(firstNonEmptyIndex).zipWithNext()
+                .fold(emptyList<CountryTotalSummary>(),
+                    { acc, (a, b) ->
+                        acc + b.copy(
+                            deaths = b.deaths - a.deaths,
+                            recovered = b.recovered - a.recovered,
+                            confirmed = b.confirmed - a.confirmed
+                        )
+                    })
+
+            return if (firstNonEmptyIndex == -1) null
+            else CountryWithTotalSummaries(
+                country,
+                correctedData,
+                correctedData.last()
+            )
+        }
+    }
 }
