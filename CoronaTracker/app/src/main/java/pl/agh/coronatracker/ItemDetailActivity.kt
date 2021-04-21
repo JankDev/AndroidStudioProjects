@@ -11,9 +11,10 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import pl.agh.coronatracker.domain.CoronaService
-import pl.agh.coronatracker.model.CountryWithTotalSummaries
+import pl.agh.coronatracker.view_model.CountryWithTotalSummaries
 
 class ItemDetailActivity : AppCompatActivity() {
+    private lateinit var coronaService: CoronaService
 
     internal lateinit var countryName: String
     internal lateinit var country: CountryWithTotalSummaries
@@ -31,6 +32,8 @@ class ItemDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) = runBlocking {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_detail)
+        coronaService = CoronaService(this@ItemDetailActivity)
+
         countryName = intent.getStringExtra("countryName")!!
         confirmed = findViewById(R.id.confirmedCases)
         deaths = findViewById(R.id.deathCases)
@@ -40,7 +43,7 @@ class ItemDetailActivity : AppCompatActivity() {
         supervisorScope {
             try {
                 country = withContext(Dispatchers.IO) {
-                    CoronaService.getCountrySummary(countryName)
+                    coronaService.getCountrySummary(countryName)
                 }
                 showData()
             } catch (ex: Exception) {

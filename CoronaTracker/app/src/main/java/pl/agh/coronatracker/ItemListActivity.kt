@@ -26,12 +26,14 @@ import pl.agh.coronatracker.view_model.CoronaSummaryViewModel
 class ItemListActivity : AppCompatActivity() {
     private var twoPane: Boolean = false
     private lateinit var coronaSummary: CoronaSummaryViewModel
+    private lateinit var coronaService: CoronaService
 
     @ExperimentalSerializationApi
     override fun onCreate(savedInstanceState: Bundle?) = runBlocking {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_list)
         World.init(applicationContext)
+        coronaService = CoronaService(this@ItemListActivity)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -44,7 +46,7 @@ class ItemListActivity : AppCompatActivity() {
         supervisorScope {
             try {
                 coronaSummary = withContext(Dispatchers.IO) {
-                    CoronaService.getCoronaSummary()
+                    coronaService.getCoronaSummary()
                 }
                 setupRecyclerView(findViewById(R.id.item_list), coronaSummary.regions)
             } catch (ex: Exception) {
