@@ -98,9 +98,9 @@ data class CountryWithTotalSummaries private constructor(
                 .fold(emptyList<CountryTotalSummary>(),
                     { acc, (a, b) ->
                         acc + b.copy(
-                            deaths = b.deaths - a.deaths,
-                            recovered = b.recovered - a.recovered,
-                            confirmed = b.confirmed - a.confirmed
+                            deaths = Math.max(b.deaths - a.deaths, 0),
+                            recovered = Math.max(b.recovered - a.recovered, 0),
+                            confirmed = Math.max(b.confirmed - a.confirmed, 0)
                         )
                     })
 
