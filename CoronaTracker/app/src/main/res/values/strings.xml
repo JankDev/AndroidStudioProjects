@@ -5,4 +5,5 @@
     <string name="today_confirmed_text">Today\'s confirmed: %1$d</string>
     <string name="today_recovered_text">Today\'s recovered: %1$d</string>
     <string name="today_deaths_text">Today\'s deaths: %1$d</string>
+    <string name="goBackButtonContent"><![CDATA[<-]]></string>
 </resources>

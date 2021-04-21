@@ -1,10 +1,11 @@
 package pl.agh.coronatracker
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
-//import com.anychart.APIlib
-//import com.anychart.AnyChartView
+import androidx.appcompat.app.AppCompatActivity
+import com.anychart.APIlib
+import com.anychart.AnyChartView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.supervisorScope
@@ -21,8 +22,11 @@ class ItemDetailActivity : AppCompatActivity() {
     internal lateinit var deaths: TextView
     internal lateinit var recovered: TextView
 
-//    internal lateinit var chart: AnyChartView
+    internal lateinit var goBackButton: Button
 
+    internal lateinit var chart: AnyChartView
+
+    val instance: ItemDetailActivity = this
 
     override fun onCreate(savedInstanceState: Bundle?) = runBlocking {
         super.onCreate(savedInstanceState)
@@ -31,6 +35,8 @@ class ItemDetailActivity : AppCompatActivity() {
         confirmed = findViewById(R.id.confirmedCases)
         deaths = findViewById(R.id.deathCases)
         recovered = findViewById(R.id.recoveredCases)
+        chart = findViewById(R.id.chart)
+        goBackButton = findViewById(R.id.goBackButton)
         supervisorScope {
             try {
                 country = withContext(Dispatchers.IO) {
@@ -38,21 +44,20 @@ class ItemDetailActivity : AppCompatActivity() {
                 }
                 showData()
             } catch (ex: Exception) {
+                instance.finish()
                 ex.printStackTrace()
             }
         }
-        showData()
     }
 
 
     private fun showData() {
         val today = country.today
+        goBackButton.setOnClickListener { this.finish() }
         confirmed.text = getString(R.string.today_confirmed_text, today.confirmed)
         deaths.text = getString(R.string.today_deaths_text, today.deaths)
         recovered.text = getString(R.string.today_recovered_text, today.recovered)
-//        APIlib.getInstance().setActiveAnyChartView(last7DaysChart);
-//        chart.setChart(CurrencyChart.createChart(currencyRates, 7))
-//        APIlib.getInstance().setActiveAnyChartView(last30DaysChart);
-//        last30DaysChart.setChart(CurrencyChart.createChart(currencyRates, 30))
+        chart.setChart(CountryChart.createChart(country))
+        APIlib.getInstance().setActiveAnyChartView(chart);
     }
 }

@@ -11,21 +11,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <Button
+            android:id="@+id/goBackButton"
+            android:layout_height="50dp"
+            android:layout_width="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/confirmedCases"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/goBackButtonContent"
+            >
+
+        </Button>
+
         <TextView
             android:id="@+id/confirmedCases"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="20dp"
             android:gravity="center"
             android:text="@string/today_confirmed_text"
             app:layout_constraintBottom_toTopOf="@+id/deathCases"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/goBackButton" />
 
         <TextView
             android:id="@+id/deathCases"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="20dp"
             android:gravity="center"
             android:text="@string/today_deaths_text"
             app:layout_constraintBottom_toTopOf="@+id/recoveredCases"
@@ -36,7 +48,7 @@
         <TextView
             android:id="@+id/recoveredCases"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="20dp"
             android:gravity="center"
             android:text="@string/today_recovered_text"
             app:layout_constraintBottom_toTopOf="@+id/chart"
@@ -47,7 +59,7 @@
         <androidx.constraintlayout.widget.Placeholder
             android:id="@+id/ph1"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="20dp"
             app:layout_constraintBottom_toTopOf="@+id/chart"
             app:layout_constraintTop_toBottomOf="@+id/recoveredCases" />
 
