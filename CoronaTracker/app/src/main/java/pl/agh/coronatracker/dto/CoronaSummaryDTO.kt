@@ -7,11 +7,13 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import pl.agh.coronatracker.domain.CountryFlagRetriever
+import pl.agh.coronatracker.entity.CountrySummary
 import pl.agh.coronatracker.util.InstantSerializer
 import pl.agh.coronatracker.util.LocalDateSerializer
 import pl.agh.coronatracker.view_model.CoronaRegionSummaryViewModel
 import pl.agh.coronatracker.view_model.CoronaSummaryViewModel
 import java.time.LocalDate
+import java.util.*
 
 interface Regionalizable {
     fun toRegion(): CoronaRegionSummaryViewModel
@@ -64,6 +66,20 @@ data class CountrySummaryDTO(
         CountryFlagRetriever.getFlagForCode(countryCode),
         country,
         newConfirmed
+    )
+
+    fun toEntity(coronaSummaryId: Long) = CountrySummary(
+        0,
+        coronaSummaryId,
+        country,
+        countryCode,
+        slug,
+        newConfirmed,
+        totalConfirmed,
+        newDeaths,
+        totalDeaths,
+        newRecovered,
+        totalRecovered
     )
 }
 

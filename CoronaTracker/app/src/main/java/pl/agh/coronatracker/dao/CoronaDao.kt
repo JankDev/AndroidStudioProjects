@@ -4,11 +4,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
+import kotlinx.serialization.ExperimentalSerializationApi
 import pl.agh.coronatracker.entity.CoronaSummary
 import pl.agh.coronatracker.entity.CoronaWithCountriesSummary
 import pl.agh.coronatracker.entity.CountrySummary
 
 @Dao
+
 interface CoronaDao {
     @Transaction
     @Insert
