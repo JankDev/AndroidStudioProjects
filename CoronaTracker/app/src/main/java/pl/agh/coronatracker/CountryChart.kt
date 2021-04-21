@@ -1,6 +1,5 @@
 package pl.agh.coronatracker
 
-import android.util.Log
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.charts.Cartesian
@@ -10,12 +9,14 @@ import com.anychart.enums.Anchor
 import com.anychart.enums.MarkerType
 import com.anychart.enums.TooltipPositionMode
 import com.anychart.graphics.vector.Stroke
-import pl.agh.coronatracker.model.CountryTotalSummary
-import pl.agh.coronatracker.model.CountryWithTotalSummaries
+import kotlinx.serialization.ExperimentalSerializationApi
+import pl.agh.coronatracker.dto.CountryTotalSummaryDTO
+import pl.agh.coronatracker.view_model.CountryWithTotalSummaries
 import java.time.format.DateTimeFormatter
 
 object CountryChart {
 
+    @ExperimentalSerializationApi
     fun createChart(countrySummary: CountryWithTotalSummaries): Cartesian {
         val cartesian = AnyChart.line()
 
@@ -88,7 +89,8 @@ object CountryChart {
         }
 
         companion object {
-            fun fromDailyRate(totalSummary: CountryTotalSummary): CoronaDataEntry {
+            @ExperimentalSerializationApi
+            fun fromDailyRate(totalSummary: CountryTotalSummaryDTO): CoronaDataEntry {
                 val date = totalSummary.date.format(DateTimeFormatter.ofPattern("dd.MM"))
                 return CoronaDataEntry(
                     x = date,

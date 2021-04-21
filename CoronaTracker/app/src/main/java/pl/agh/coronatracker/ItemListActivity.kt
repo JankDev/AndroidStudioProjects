@@ -2,15 +2,15 @@ package pl.agh.coronatracker
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.widget.NestedScrollView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.NestedScrollView
+import androidx.recyclerview.widget.RecyclerView
 import com.blongho.country_data.World
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -18,8 +18,6 @@ import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import pl.agh.coronatracker.domain.CoronaService
-
-import pl.agh.coronatracker.dummy.DummyContent
 import pl.agh.coronatracker.view_model.CoronaRegionSummaryViewModel
 import pl.agh.coronatracker.view_model.CoronaSummaryViewModel
 

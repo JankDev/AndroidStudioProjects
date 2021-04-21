@@ -10,22 +10,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.ExperimentalSerializationApi
 import pl.agh.coronatracker.domain.CoronaService
 import pl.agh.coronatracker.view_model.CountryWithTotalSummaries
 
 class ItemDetailActivity : AppCompatActivity() {
     private lateinit var coronaService: CoronaService
 
-    internal lateinit var countryName: String
+    private lateinit var countryName: String
+    @ExperimentalSerializationApi
     internal lateinit var country: CountryWithTotalSummaries
 
-    internal lateinit var confirmed: TextView
-    internal lateinit var deaths: TextView
-    internal lateinit var recovered: TextView
+    private lateinit var confirmed: TextView
+    private lateinit var deaths: TextView
+    private lateinit var recovered: TextView
 
-    internal lateinit var goBackButton: Button
+    private lateinit var goBackButton: Button
 
-    internal lateinit var chart: AnyChartView
+    private lateinit var chart: AnyChartView
 
     val instance: ItemDetailActivity = this
 
@@ -54,6 +56,7 @@ class ItemDetailActivity : AppCompatActivity() {
     }
 
 
+    @ExperimentalSerializationApi
     private fun showData() {
         val today = country.today
         goBackButton.setOnClickListener { this.finish() }
