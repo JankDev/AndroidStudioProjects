@@ -18,9 +18,11 @@ class ItemDetailActivity : AppCompatActivity() {
     private lateinit var coronaService: CoronaService
 
     private lateinit var countryName: String
+
     @ExperimentalSerializationApi
     internal lateinit var country: CountryWithTotalSummaries
 
+    private lateinit var countryNameView: TextView
     private lateinit var confirmed: TextView
     private lateinit var deaths: TextView
     private lateinit var recovered: TextView
@@ -37,6 +39,7 @@ class ItemDetailActivity : AppCompatActivity() {
         coronaService = CoronaService(this@ItemDetailActivity)
 
         countryName = intent.getStringExtra("countryName")!!
+        countryNameView = findViewById(R.id.countryName)
         confirmed = findViewById(R.id.confirmedCases)
         deaths = findViewById(R.id.deathCases)
         recovered = findViewById(R.id.recoveredCases)
@@ -60,6 +63,7 @@ class ItemDetailActivity : AppCompatActivity() {
     private fun showData() {
         val today = country.today
         goBackButton.setOnClickListener { this.finish() }
+        countryNameView.text = countryName
         confirmed.text = getString(R.string.today_confirmed_text, today.confirmed)
         deaths.text = getString(R.string.today_deaths_text, today.deaths)
         recovered.text = getString(R.string.today_recovered_text, today.recovered)

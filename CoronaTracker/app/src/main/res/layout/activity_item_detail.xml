@@ -13,8 +13,8 @@
 
         <Button
             android:id="@+id/goBackButton"
-            android:layout_height="50dp"
-            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/confirmedCases"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -22,6 +22,18 @@
             >
 
         </Button>
+
+        <TextView
+            android:id="@+id/countryName"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Country"
+            app:layout_constraintBottom_toTopOf="@+id/confirmedCases"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/goBackButton" />
 
         <TextView
             android:id="@+id/confirmedCases"
@@ -32,7 +44,7 @@
             app:layout_constraintBottom_toTopOf="@+id/deathCases"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/goBackButton" />
+            app:layout_constraintTop_toBottomOf="@id/countryName" />
 
         <TextView
             android:id="@+id/deathCases"
@@ -56,13 +68,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/deathCases" />
 
-        <androidx.constraintlayout.widget.Placeholder
-            android:id="@+id/ph1"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/chart"
-            app:layout_constraintTop_toBottomOf="@+id/recoveredCases" />
-
         <com.anychart.AnyChartView
             android:id="@+id/chart"
             android:layout_width="match_parent"
@@ -70,7 +75,7 @@
             app:layout_constraintBottom_toTopOf="@+id/ph2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ph1" />
+            app:layout_constraintTop_toBottomOf="@id/recoveredCases" />
 
         <androidx.constraintlayout.widget.Placeholder
             android:id="@+id/ph2"
